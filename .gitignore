@@ -7,3 +7,8 @@
 outputs/
 mlruns/
 resources/
+*/*.pkl
+data_storage/
+*/sample_data
+eda/
+resources/
