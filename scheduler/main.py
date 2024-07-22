@@ -29,7 +29,7 @@ MONITORING_INTERVAL_HOURS = os.getenv("MONITORING_INTERVAL_HOURS", 3)
 cfg = DictConfig(
     {
         "url": DB_URL,
-        "port": PORT,
+        "port": int(PORT),
         "user": USER_NAME,
         "password": DB_PASSWORD,
         "name": DB_NAME,
@@ -81,3 +81,5 @@ if __name__ == '__main__':
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         pass
+    
+    # db_monitoring()

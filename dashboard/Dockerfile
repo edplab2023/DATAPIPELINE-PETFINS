@@ -1,27 +1,33 @@
 ARG FROM_IMAGE=python:3.10.6-slim
 
-FROM ${FROM_IMAGE}
+FROM python:3.10-slim as build-stage
 
-ARG LOCAL_DIR=bi
+WORKDIR /tmp
+RUN pip install poetry
+ENV PATH="${PATH}:/root/.local/bin"
 
-ENV PROJECT_DIR opt
-WORKDIR /${PROJECT_DIR}
-RUN apt-get -y update && \
+COPY pyproject.toml poetry.lock* /tmp/
+RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
+
+
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY --from=build-stage /tmp/requirements.txt /app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt && \
+    apt-get -y update && \
     apt-get -y install \
     apt-utils \
     gcc && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    python3 -m pip install --user pipx && \
-    python3 -m pipx install poetry
+    rm -rf /var/lib/apt/lists/*
 
-# poetry 설치 디렉토리 PATH에 추가    
-ENV PATH="${PATH}:/root/.local/bin"
+COPY . /app
 
-
-COPY . .
-RUN poetry install
+EXPOSE 8501
 VOLUME /data_storage
 
 
-CMD ["poetry", "run", "streamlit", "run", "src/main.py" ]
+CMD ["streamlit", "run", "src/main.py" ]
