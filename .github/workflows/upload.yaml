@@ -7,10 +7,28 @@ on:
 
 
 jobs:
+  
   build-and-upload:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker Compose services
+      run: |
+        docker-compose build
+        docker-compose images -q > images.txt
+    
+    - name: Save Docker images as tar files
+      run: |
+        mkdir -p docker_images
+        while IFS= read -r image_id; do
+          image_name=$(docker image inspect --format '{{.Config.Image}}' $image_id)
+          docker save -o docker_images/${image_name}.tar $image_id
+        done < images.txt
+
     - name: Checkout repository
       uses: actions/checkout@v2
     
@@ -33,8 +51,5 @@ jobs:
     - name: upload random file
 
       run: |
-        pwd
-        ls -la
-        touch random.txt
         aws --endpoint-url=https://kr.object.fin-ncloudstorage.com \
-        s3 cp random.txt s3://petfins/random.txt
+        s3 cp docker_images/ s3://petfins/petfins-ml-deploy-pipeline/ --recursive
