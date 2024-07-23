@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
@@ -25,12 +25,7 @@ jobs:
     
     - name: Save Docker images as tar files
       run: |
-        mkdir -p docker_images
-        while IFS= read -r image_id; do
-          image_name=$(docker image inspect --format '{{.Config.Image}}' $image_id)
-          docker save -o docker_images/${image_name}.tar $image_id
-        done < images.txt
-
+        sh zip-docker-compose.sh
     
     
     - name: Install Aws-CLI(ncloud는 aws-cli를 사용한다.)
@@ -53,4 +48,6 @@ jobs:
 
       run: |
         aws --endpoint-url=https://kr.object.fin-ncloudstorage.com \
-        s3 cp docker_images/ s3://petfins/petfins-ml-deploy-pipeline/ --recursive
+        s3 cp docker_project.zip s3://petfins/petfins-ml-deploy-pipeline/docker_project.zip --recursive
+        
+      
