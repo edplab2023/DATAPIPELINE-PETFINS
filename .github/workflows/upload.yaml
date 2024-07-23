@@ -1,0 +1,38 @@
+name: connect to ncloud and upload
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Install Aws-CLI(ncloud는 aws-cli를 사용한다.)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y awscli
+
+    - name: configure ncloud
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.NCLOUD_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.NCLOUD_SECRET_ACCESS_KEY }}
+      run: |
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        aws configure set default.region ap-northeast-2
+
+    - name: upload random file
+
+      run: |
+        pwd
+        ls -la
+        touch random.txt
+        aws --endpoint-url=https://kr.object.ncloudstorage.com
+        s3 cp random.txt s3://petfins/random.txt
