@@ -34,5 +34,5 @@ jobs:
         pwd
         ls -la
         touch random.txt
-        aws --endpoint-url=https://kr.object.ncloudstorage.com
+        aws --endpoint-url=https://kr.object.fin-ncloudstorage.com
         s3 cp random.txt s3://petfins/random.txt
