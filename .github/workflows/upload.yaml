@@ -24,6 +24,8 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.NCP_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.NCP_PASSWORD }}
       run: |
+        echo "Access Key ID: $AWS_ACCESS_KEY_ID"  # For debugging
+        echo "Secret Access Key: $AWS_SECRET_ACCESS_KEY"  # For debugging
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set default.region ap-northeast-2
