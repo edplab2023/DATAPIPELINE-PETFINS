@@ -28,7 +28,7 @@ done
 # 2. Docker Compose 파일 준비
 COMPOSE_FILE="docker-compose.yaml"
 UNZIP_FILE="unzip-docker-compose.sh"
-
+ENV_FILE=".env"
 
 # 3. 모든 파일을 .zip으로 압축
 IMAGES_DIR="docker_images/"
@@ -36,6 +36,7 @@ ZIP_FILE="docker_project.zip"
 
 cp $COMPOSE_FILE $IMAGES_DIR$COMPOSE_FILE
 cp $UNZIP_FILE $IMAGES_DIR$UNZIP_FILE
+cp $ENV_FILE $IMAGES_DIR$ENV_FILE
 
 echo "Compressing files into $ZIP_FILE..."
 zip -r $ZIP_FILE $IMAGES_DIR
