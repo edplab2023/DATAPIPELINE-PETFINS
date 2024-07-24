@@ -5,4 +5,5 @@ docker load -i images.tar
 
 
 # Docker Compose 실행
-docker-compose up -d
+docker-compose pull
+docker-compose up -d --no-build
