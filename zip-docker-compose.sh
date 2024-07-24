@@ -12,8 +12,7 @@ mkdir -p docker_images
 
 for service in $services; do
   # 이미지 ID 및 이미지 이름 가져오기
-  service=pet_care_cost_prediction-$service
-  image_id=$(docker-compose images -q $service)
+    image_name=$(docker-compose config | awk '/image:/{print $2}' | grep -E "^${service}\b" | head -n 1)
 
   if [ -n "$image_id" ]; then
     # 이미지 이름: 서비스 이름 사용
