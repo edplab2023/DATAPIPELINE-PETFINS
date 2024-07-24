@@ -12,28 +12,28 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DB_NAME: ${{ secrets.DB_NAME }}          # GitHub Actions 환경 변수로 설정
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_URL: ${{ secrets.DB_URL }}
-      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-      GUNICORN_NUM_WORKERS: ${{ secrets.GUNICORN_NUM_WORKERS }}
-      INSURANCE_CLAIM_FILE: ${{ secrets.INSURANCE_CLAIM_FILE }}
-      INSURANCE_CLAIM_PREDICTION_DIR: ${{ secrets.INSURANCE_CLAIM_PREDICTION_DIR }}
-      MLFLOW_ARTIFACT_PATH: ${{ secrets.MLFLOW_ARTIFACT_PATH }}
-      MLFLOW_TRACKING_URL: ${{ secrets.MLFLOW_TRACKING_URL }}
-      MLSERVER_ENDPOINT: ${{ secrets.MLSERVER_ENDPOINT }}
-      MLSERVER_URL: ${{ secrets.MLSERVER_URL }}
-      MODEL_SERVER_URL: ${{ secrets.MODEL_SERVER_URL }}
-      MONITORING_INTERVAL_HOURS: ${{ secrets.MONITORING_INTERVAL_HOURS }}
-      NCP_CONTAINER_REGISTRY: ${{ secrets.NCP_CONTAINER_REGISTRY }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      RECEIVE_EMAIL_ADDRESS: ${{ secrets.RECEIVE_EMAIL_ADDRESS }}
-      RECORD_SAVE_PATH: ${{ secrets.RECORD_SAVE_PATH }}
-      SEND_EMAIL_ADDRESS: ${{ secrets.SEND_EMAIL_ADDRESS }}
-      USER_NAME: ${{ secrets.USER_NAME }}
+      DB_NAME: ${{ github.DB_NAME }}          # GitHub Actions 환경 변수로 설정
+      DB_PASSWORD: ${{ github.DB_PASSWORD }}
+      DB_PORT: ${{ github.DB_PORT }}
+      DB_URL: ${{ github.DB_URL }}
+      EMAIL_PASSWORD: ${{ github.EMAIL_PASSWORD }}
+      GUNICORN_NUM_WORKERS: ${{ github.GUNICORN_NUM_WORKERS }}
+      INSURANCE_CLAIM_FILE: ${{ github.INSURANCE_CLAIM_FILE }}
+      INSURANCE_CLAIM_PREDICTION_DIR: ${{ github.INSURANCE_CLAIM_PREDICTION_DIR }}
+      MLFLOW_ARTIFACT_PATH: ${{ github.MLFLOW_ARTIFACT_PATH }}
+      MLFLOW_TRACKING_URL: ${{ github.MLFLOW_TRACKING_URL }}
+      MLSERVER_ENDPOINT: ${{ github.MLSERVER_ENDPOINT }}
+      MLSERVER_URL: ${{ github.MLSERVER_URL }}
+      MODEL_SERVER_URL: ${{ github.MODEL_SERVER_URL }}
+      MONITORING_INTERVAL_HOURS: ${{ github.MONITORING_INTERVAL_HOURS }}
+      NCP_CONTAINER_REGISTRY: ${{ github.NCP_CONTAINER_REGISTRY }}
+      POSTGRES_DB: ${{ github.POSTGRES_DB }}
+      POSTGRES_PASSWORD: ${{ github.POSTGRES_PASSWORD }}
+      POSTGRES_USER: ${{ github.POSTGRES_USER }}
+      RECEIVE_EMAIL_ADDRESS: ${{ github.RECEIVE_EMAIL_ADDRESS }}
+      RECORD_SAVE_PATH: ${{ github.RECORD_SAVE_PATH }}
+      SEND_EMAIL_ADDRESS: ${{ github.SEND_EMAIL_ADDRESS }}
+      USER_NAME: ${{ github.USER_NAME }}
 
     steps:
     - name: Checkout code

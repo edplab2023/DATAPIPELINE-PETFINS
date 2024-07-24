@@ -4,7 +4,6 @@ services:
 
   postgres:
     image: postgres:14.3
-    container_name: postgres
     volumes:
       - ./postgres/init:/docker-entrypoint-initdb.d
     networks:

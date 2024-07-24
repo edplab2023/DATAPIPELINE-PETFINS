@@ -18,6 +18,7 @@ IMAGES_DIR="docker_images"
 ZIP_FILE="docker_project.zip"
 
 docker images
+docker images --format '{{.Repository}}:{{.Tag}}' | grep 'datapipeline'
 
 mkdir -p $IMAGES_DIR
 docker save $(docker images --format '{{.Repository}}:{{.Tag}}' | grep 'datapipeline') -o $IMAGES_DIR/images.tar
