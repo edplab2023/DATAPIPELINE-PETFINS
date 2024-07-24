@@ -11,15 +11,20 @@ services=$(docker-compose config --services)
 mkdir -p docker_images
 
 for service in $services; do
-  # 이미지 ID 및 이미지 이름 가져오기
-    image_name=$(docker-compose config | awk '/image:/{print $2}' | grep -E "^${service}\b" | head -n 1)
+  # 서비스에 대한 이미지 이름 가져오기
+  image_name=$(docker-compose config | awk '/image:/{print $2}' | grep -E "^${service}\b" | head -n 1)
+
+  if [ -z "$image_name" ]; then
+    # 이미지 이름이 없는 경우 서비스 이름을 이미지 이름으로 설정
+    image_name=${service}
+  fi
+
+  # 이미지 ID 가져오기
+  image_id=$(docker images -q $image_name)
 
   if [ -n "$image_id" ]; then
-    # 이미지 이름: 서비스 이름 사용
-    image_name="$service"
-
     echo "Saving image for service $service as $image_name.tar"
-    docker save -o docker_images/{image_name}.tar $image_id
+    docker save -o docker_images/${image_name}.tar $image_id
   else
     echo "No image found for service $service"
   fi
