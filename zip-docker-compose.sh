@@ -12,6 +12,7 @@ mkdir -p docker_images
 
 for service in $services; do
   # 이미지 ID 및 이미지 이름 가져오기
+  service=pet_care_cost_prediction-$service
   image_id=$(docker-compose images -q $service)
 
   if [ -n "$image_id" ]; then
@@ -19,7 +20,7 @@ for service in $services; do
     image_name="$service"
 
     echo "Saving image for service $service as $image_name.tar"
-    docker save -o docker_images/${image_name}.tar $image_id
+    docker save -o docker_images/{image_name}.tar $image_id
   else
     echo "No image found for service $service"
   fi
