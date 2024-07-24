@@ -10,6 +10,9 @@ services=$(docker-compose config --services)
 # 이미지 tar 파일로 저장
 mkdir -p docker_images
 
+# 이미지 목록 확인
+docker images
+
 for service in $services; do
   # 서비스에 대한 이미지 이름 가져오기
   image_name=$(docker-compose config | awk '/image:/{print $2}' | grep -E "^${service}\b" | head -n 1)
@@ -26,6 +29,7 @@ for service in $services; do
     echo "Saving image for service $service as $image_name.tar"
     docker save -o docker_images/${image_name}.tar $image_id
   else
+    echo "Image id = $image_id"
     echo "No image found for service $service"
   fi
 done
